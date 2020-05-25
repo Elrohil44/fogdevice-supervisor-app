@@ -6,6 +6,11 @@ import CustomRoutes from './CustomRoutes';
 import { authProvider, dataProvider } from '../providers';
 
 import { CreateEmulator, EmulatorsList, EditEmulator } from '../containers/emulator';
+import {
+  CreateEmulationEnvironment,
+  EmulationEnvironmentsList,
+  EditEmulationEnvironment,
+} from '../containers/emulation-environment';
 
 const AdminDashboard = () => {
   const history = useHistory();
@@ -23,6 +28,13 @@ const AdminDashboard = () => {
         create={CreateEmulator}
         list={EmulatorsList}
         edit={EditEmulator}
+      />
+      <Resource
+        name="emulation-environments"
+        options={{ label: 'Environments' }}
+        create={CreateEmulationEnvironment}
+        list={EmulationEnvironmentsList}
+        edit={EditEmulationEnvironment}
       />
     </Admin>
   );

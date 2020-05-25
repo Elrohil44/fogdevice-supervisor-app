@@ -1,7 +1,9 @@
-const emulators = require('./emulators');
+import emulators from './emulators';
+import emulationEnvironments from './emulation-environments';
 
 const providers = {
   emulators,
+  'emulation-environments': emulationEnvironments,
 };
 
 const getProviderForCallType = (callType) => async (resource, params) => {
