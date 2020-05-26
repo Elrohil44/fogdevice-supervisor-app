@@ -4,4 +4,7 @@ set -e
 
 VERSION=`yarn -s echo-version`
 
-docker build -t elrohil/fogdevice-supervisor-app:latest -t elrohil/fogdevice-supervisor-app:${VERSION} ./
+docker build \
+  --build-arg="REACT_APP_API_URL=http://localhost:5001" \
+  -t elrohil/fogdevice-supervisor-app:latest \
+  -t elrohil/fogdevice-supervisor-app:${VERSION} ./
