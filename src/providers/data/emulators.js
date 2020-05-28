@@ -42,9 +42,12 @@ export const update = async ({ id, data }) => {
   };
 };
 
+export const getMany = async () => getList({});
+
 export default {
   getList,
   getOne,
   create,
   update,
+  getMany,
 };

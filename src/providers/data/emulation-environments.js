@@ -43,9 +43,19 @@ export const update = async ({ id, data }) => {
   };
 };
 
+export const startEmulation = async ({ _id: id }) => {
+  await api.emulationEnvironments.startEmulation(getToken(), { id });
+};
+
+export const stopEmulation = async ({ _id: id }) => {
+  await api.emulationEnvironments.stopEmulation(getToken(), { id });
+};
+
 export default {
   getList,
   getOne,
   create,
   update,
+  startEmulation,
+  stopEmulation,
 };

@@ -1,5 +1,7 @@
 import React from 'react';
-import { bool, func, object } from 'prop-types';
+import {
+  any, bool, func, object,
+} from 'prop-types';
 import {
   SimpleForm, TextInput, SelectInput, FormDataConsumer,
   required, ArrayInput, SimpleFormIterator, ReferenceInput, NumberInput,
@@ -359,10 +361,10 @@ EmulatorForm.propTypes = {
   getSource: func,
 };
 
-const EmulationEnvironmentForm = ({ skipId, ...rest }) => (
+const EmulationEnvironmentForm = ({ skipId, toolbar, ...rest }) => (
   <SimpleForm
     {...rest}
-    // validate={validate}
+    toolbar={toolbar}
     warnWhenUnsavedChanges
   >
     {
@@ -405,6 +407,7 @@ const EmulationEnvironmentForm = ({ skipId, ...rest }) => (
 
 EmulationEnvironmentForm.propTypes = {
   skipId: bool,
+  toolbar: any,
 };
 
 export default EmulationEnvironmentForm;

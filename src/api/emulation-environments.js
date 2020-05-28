@@ -35,9 +35,27 @@ export const updateEmulationEnvironment = async (token, { id, data }) => fetchAu
   description: 'Updating emulation environment',
 });
 
+export const startEmulation = async (token, { id }) => fetchAuthorizedJsonApi({
+  method: 'GET',
+  endpoint: `/emulation-environments/${id}/start`,
+  expectedStatus: 204,
+  token,
+  description: 'Starting emulation',
+});
+
+export const stopEmulation = async (token, { id }) => fetchAuthorizedJsonApi({
+  method: 'GET',
+  endpoint: `/emulation-environments/${id}/stop`,
+  expectedStatus: 204,
+  token,
+  description: 'Starting emulation',
+});
+
 export default {
   fetchEmulationEnvironments,
   fetchEmulationEnvironment,
   createEmulationEnvironment,
   updateEmulationEnvironment,
+  startEmulation,
+  stopEmulation,
 };
