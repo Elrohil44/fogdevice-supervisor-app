@@ -2,7 +2,7 @@ import React, {
   useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
 import {
-  array, func, string,
+  array, func, number, string,
 } from 'prop-types';
 import {
   COMMANDS, ENVIRONMENT_HEIGHT, ENVIRONMENT_WIDTH, TRIGGERS,
@@ -16,6 +16,8 @@ const EnvironmentCanvas = ({
   id,
   emulators,
   commands,
+  width = ENVIRONMENT_WIDTH,
+  height = ENVIRONMENT_HEIGHT,
   onSelect,
 }) => {
   const canvasRef = useRef();
@@ -72,11 +74,11 @@ const EnvironmentCanvas = ({
     if (canvas) {
       const context = canvas.getContext('2d');
       context.fillStyle = '#FFF';
-      context.fillRect(0, 0, ENVIRONMENT_WIDTH * MULTIPLIER, ENVIRONMENT_HEIGHT * MULTIPLIER);
+      context.fillRect(0, 0, width * MULTIPLIER, height * MULTIPLIER);
       emulators.forEach((emulator) => drawEmulator(context, emulator));
       heaters.forEach((heater) => drawHeater(context, heater));
     }
-  }, [emulators, heaters, drawEmulator, drawHeater]);
+  }, [emulators, heaters, drawEmulator, drawHeater, width, height]);
 
   const onIterationChange = useCallback((event) => {
     setIteration(Math.floor(event.target.value) || 0);
@@ -86,25 +88,25 @@ const EnvironmentCanvas = ({
     const { current: canvas } = canvasRef;
     if (canvas) {
       const {
-        left, top, width, height,
+        left, top, width: canvasWidth, height: cnvasHeight,
       } = canvas.getBoundingClientRect();
-      const x = Math.floor(ENVIRONMENT_WIDTH * ((event.clientX - left) / width));
-      const y = Math.floor(ENVIRONMENT_HEIGHT * ((event.clientY - top) / height));
+      const x = Math.floor(width * ((event.clientX - left) / canvasWidth));
+      const y = Math.floor(height * ((event.clientY - top) / cnvasHeight));
       if (onSelect) {
         onSelect({ x, y });
       }
     } else if (onSelect) {
       onSelect({ x: 0, y: 0 });
     }
-  }, [onSelect]);
+  }, [onSelect, width, height]);
 
   return (
     <div className="environment-canvas">
       <canvas
         ref={canvasRef}
         id={id}
-        width={ENVIRONMENT_WIDTH * MULTIPLIER}
-        height={ENVIRONMENT_HEIGHT * MULTIPLIER}
+        width={width * MULTIPLIER}
+        height={height * MULTIPLIER}
         onClick={onClick}
       />
       <label>{ 'Iteration counter' }</label>
@@ -123,6 +125,8 @@ EnvironmentCanvas.propTypes = {
   id: string,
   emulators: array,
   commands: array,
+  width: number,
+  height: number,
   onSelect: func,
 };
 

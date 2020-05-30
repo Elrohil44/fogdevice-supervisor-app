@@ -1,6 +1,6 @@
 export const API_URL = process.env.REACT_APP_API_URL;
 export const AUTH_DATA_KEY = 'auth';
-export const ENVIRONMENT_WIDTH = 200;
+export const ENVIRONMENT_WIDTH = 100;
 export const ENVIRONMENT_HEIGHT = 100;
 
 export const EVENT_TRIGGERS = {

@@ -6,7 +6,7 @@ import {
   SimpleForm, TextInput, SelectInput, FormDataConsumer,
   required, ArrayInput, SimpleFormIterator, ReferenceInput, NumberInput,
 } from 'react-admin';
-import { useForm } from 'react-final-form';
+import { useField, useForm } from 'react-final-form';
 import { FormLabel, FormGroup } from '@material-ui/core';
 
 import EnvironmentCanvas from './EnvironmentCanvas';
@@ -318,44 +318,58 @@ const CommandItemForm = (props) => (
   </FormDataConsumer>
 );
 
-const EmulatorForm = ({ getSource, ...props }) => (
-  <>
-    <div>
-      <ReferenceInput
-        validate={requiredValidator}
+const EmulatorForm = ({ getSource, ...props }) => {
+  const { value: width = ENVIRONMENT_WIDTH } = useField('width', { subscription: { value: true } });
+  const { value: height = ENVIRONMENT_HEIGHT } = useField('width', { subscription: { value: true } });
+
+  return (
+    <>
+      <div>
+        <ReferenceInput
+          validate={requiredValidator}
+          {...props}
+          label="Emulator"
+          source={getSource('emulator')}
+          reference="emulators"
+        >
+          <SelectInput
+            optionText="name"
+            fullWidth={false}
+          />
+        </ReferenceInput>
+      </div>
+      <NumberInput
         {...props}
-        label="Emulator"
-        source={getSource('emulator')}
-        reference="emulators"
-      >
-        <SelectInput
-          optionText="name"
-          fullWidth={false}
-        />
-      </ReferenceInput>
-    </div>
-    <NumberInput
-      {...props}
-      source={getSource('x')}
-      label="X Coordinate"
-      min={0}
-      max={ENVIRONMENT_WIDTH - 1}
-      step={1}
-      fullWidth={false}
-      validate={requiredValidator}
-    />
-    <NumberInput
-      {...props}
-      source={getSource('y')}
-      label="Y Coordinate"
-      min={0}
-      max={ENVIRONMENT_HEIGHT - 1}
-      step={1}
-      fullWidth={false}
-      validate={requiredValidator}
-    />
-  </>
-);
+        source={getSource('x')}
+        label="X Coordinate"
+        min={0}
+        max={width - 1}
+        step={1}
+        fullWidth={false}
+        validate={requiredValidator}
+      />
+      <NumberInput
+        {...props}
+        source={getSource('y')}
+        label="Y Coordinate"
+        min={0}
+        max={height - 1}
+        step={1}
+        fullWidth={false}
+        validate={requiredValidator}
+      />
+      <NumberInput
+        {...props}
+        source={getSource('maxUpdateInterval')}
+        label="Max update interval"
+        min={0}
+        step={1}
+        fullWidth={false}
+        validate={requiredValidator}
+      />
+    </>
+  );
+};
 
 EmulatorForm.propTypes = {
   getSource: func,
@@ -379,6 +393,27 @@ const EmulationEnvironmentForm = ({ skipId, toolbar, ...rest }) => (
     <TextInput
       source="name"
       validate={[requiredValidator]}
+    />
+    <NumberInput
+      source="epochDuration"
+      min={0}
+      step={1}
+      validate={requiredValidator}
+      initialValue={1000}
+    />
+    <NumberInput
+      source="width"
+      min={0}
+      step={1}
+      validate={requiredValidator}
+      initialValue={ENVIRONMENT_WIDTH}
+    />
+    <NumberInput
+      source="height"
+      min={0}
+      step={1}
+      validate={requiredValidator}
+      initialValue={ENVIRONMENT_HEIGHT}
     />
     <FormDataConsumer>
       {
