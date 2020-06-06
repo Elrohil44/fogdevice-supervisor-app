@@ -6,5 +6,10 @@ VERSION=`yarn -s echo-version`
 
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
-docker push elrohil/fogdevice-supervisor-app:latest
-docker push elrohil/fogdevice-supervisor-app:${VERSION}
+if [ "$1" = "production" ]; then
+    docker push elrohil/fogdevice-supervisor-app:production
+elif
+    docker push elrohil/fogdevice-supervisor-app:latest
+    docker push elrohil/fogdevice-supervisor-app:${VERSION}
+fi
+

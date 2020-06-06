@@ -11,9 +11,13 @@ jobs:
       script: bash ./build.sh
     - stage: release
       script: bash ./build.sh && bash ./release.sh
+    - stage: release-production
+      script: bash ./build.sh production && bash ./release.sh production
 
 stages:
   - lint
   - build
   - name: release
     if: type = push AND branch = master
+  - name: release-production
+    if: type = push AND branch = production
