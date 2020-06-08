@@ -9,7 +9,7 @@ API_URL=http://localhost:5001
 
 if [ "$1" = "production" ]; then
     TAG=production
-    API_URL=http://13.95.124.212:5001
+    API_URL=http://52.233.249.15:5001
 fi
 
 docker build \
